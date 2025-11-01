@@ -102,7 +102,7 @@ const CONFIG = {
 
 ### Step 3: Deploy
 
-**Deploy via Wrangler CLI (Required)**
+**Option A: Deploy via Wrangler CLI (Easiest)**
 
 ```bash
 # Login to Cloudflare
@@ -114,17 +114,38 @@ wrangler login
 wrangler deploy
 ```
 
-**Note**: Deployment via Cloudflare Dashboard is not recommended since the worker uses npm dependencies (Turndown) that require bundling. Wrangler handles this automatically.
+**Option B: Deploy via Cloudflare Dashboard**
+
+If you prefer to use the dashboard, you need to bundle the code first:
+
+```bash
+# Build a single bundled file
+npm run build
+
+# The bundled code is now in dist/worker.bundle.js
+# Copy the contents of this file
+```
+
+Then:
+1. Go to Cloudflare Dashboard → Workers & Pages
+2. Click "Create Application" → "Create Worker"
+3. Paste the contents of `dist/worker.bundle.js` into the editor
+4. Click "Save and Deploy"
+5. Go to "Settings" → "Triggers" to add routes
 
 ### Step 4: Add Routes
 
+After deployment (via either method), configure routes:
+
 1. Go to Cloudflare Dashboard → Workers & Pages
 2. Select your worker
-3. Go to "Triggers" tab
+3. Go to "Settings" → "Triggers" tab
 4. Add routes for your domain:
    - `yourdomain.com/*`
    - `www.yourdomain.com/*` (if using www)
 5. Save
+
+**Note**: If you used Wrangler, you can also configure routes directly in `wrangler.toml`.
 
 ### Step 5: SEO Configuration (CRITICAL)
 
