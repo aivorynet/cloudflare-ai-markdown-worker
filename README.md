@@ -2,6 +2,17 @@
 
 A Cloudflare Worker that automatically detects AI user agents and serves them markdown versions of your web content for better parsing and understanding.
 
+## Quick Start
+
+**No build tools needed!** Download the pre-built bundle and paste it into Cloudflare Dashboard:
+
+1. Download: [release/worker.bundle.js](https://raw.githubusercontent.com/aivorynet/cloudflare-ai-markdown-worker/main/release/worker.bundle.js)
+2. Paste into Cloudflare Workers Dashboard
+3. Add routes for your domain
+4. Done!
+
+See [Installation](#installation) for detailed instructions and customization options.
+
 ## Two Modes of Operation
 
 ### Mode 1: Pre-generated Markdown (Recommended)
@@ -70,19 +81,37 @@ Check out our compliance tools at [aivory.net](https://aivory.net) - they catch 
 - Node.js and npm installed
 - Wrangler CLI: `npm install -g wrangler`
 
-### Step 1: Install Dependencies
+### Step 1: Get the Worker Code
+
+**Option A: Use Pre-built Bundle (Easiest)**
+
+Download the pre-built bundle from the repository:
+- **Direct download**: [release/worker.bundle.js](https://raw.githubusercontent.com/aivorynet/cloudflare-ai-markdown-worker/main/release/worker.bundle.js)
+- Or clone and copy from `release/worker.bundle.js`
+
+This bundle includes Turndown and all dependencies - ready to paste into Cloudflare Dashboard.
+
+**Option B: Build from Source**
 
 ```bash
-# Clone or download this repository
+# Clone the repository
 cd ai-markdown-web-worker
 
 # Install dependencies (including Turndown for HTML to Markdown conversion)
 npm install
+
+# Build the bundle
+npm run build
+# Output: dist/worker.bundle.js
 ```
 
-### Step 2: Configure the Worker
+### Step 2: Configure the Worker (Optional)
 
-Edit the `CONFIG` object at the top of `worker.js` to customize for your site:
+The worker works with default settings, but you can customize it by editing the `CONFIG` object.
+
+**If using pre-built bundle**: Edit `release/worker.bundle.js` directly (search for `const CONFIG = {`)
+
+**If building from source**: Edit the `CONFIG` object in `worker.js`:
 
 ```javascript
 const CONFIG = {
@@ -100,6 +129,8 @@ const CONFIG = {
 };
 ```
 
+Then rebuild with `npm run build` if you made changes.
+
 ### Step 3: Deploy
 
 **Option A: Deploy via Wrangler CLI (Easiest)**
@@ -116,22 +147,16 @@ wrangler deploy
 
 **Option B: Deploy via Cloudflare Dashboard**
 
-If you prefer to use the dashboard, you need to bundle the code first:
+1. Download or copy the bundled worker code:
+   - Use pre-built: `release/worker.bundle.js`
+   - Or build from source: `npm run build` (creates `dist/worker.bundle.js`)
 
-```bash
-# Build a single bundled file
-npm run build
-
-# The bundled code is now in dist/worker.bundle.js
-# Copy the contents of this file
-```
-
-Then:
-1. Go to Cloudflare Dashboard → Workers & Pages
-2. Click "Create Application" → "Create Worker"
-3. Paste the contents of `dist/worker.bundle.js` into the editor
-4. Click "Save and Deploy"
-5. Go to "Settings" → "Triggers" to add routes
+2. Deploy to Cloudflare:
+   - Go to Cloudflare Dashboard → Workers & Pages
+   - Click "Create Application" → "Create Worker"
+   - Paste the contents of the bundle file into the editor
+   - Click "Save and Deploy"
+   - Go to "Settings" → "Triggers" to add routes
 
 ### Step 4: Add Routes
 
