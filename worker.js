@@ -8,9 +8,6 @@
  * @author AIVory (https://aivory.net)
  */
 
-import TurndownService from 'turndown';
-import { parseHTML } from 'linkedom';
-
 // ============================================================================
 // CONFIGURATION - Customize these settings for your site
 // ============================================================================
@@ -20,7 +17,7 @@ const CONFIG = {
   // Examples: '/md', '/ai', '/markdown'
   markdownPathPrefix: '/md',
 
-  // Markdown file naming pattern for Hugo sites
+  // Markdown file naming pattern
   // Options: 'index' for /md/about/index.md or 'direct' for /md/about.md
   markdownFilePattern: 'index',
 
@@ -40,6 +37,13 @@ const CONFIG = {
     'cohere', 'youbot', 'anthropicbot',
   ]
 };
+
+// ============================================================================
+// Dependencies
+// ============================================================================
+
+import TurndownService from 'turndown';
+import { parseHTML } from 'linkedom';
 
 // ============================================================================
 // Worker Code

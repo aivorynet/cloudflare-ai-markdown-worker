@@ -11853,7 +11853,7 @@ var CONFIG = {
   // Path prefix for pre-generated markdown files
   // Examples: '/md', '/ai', '/markdown'
   markdownPathPrefix: "/md",
-  // Markdown file naming pattern for Hugo sites
+  // Markdown file naming pattern
   // Options: 'index' for /md/about/index.md or 'direct' for /md/about.md
   markdownFilePattern: "index",
   // Content selectors to try (in order) when extracting main content

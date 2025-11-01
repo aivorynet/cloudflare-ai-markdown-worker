@@ -2,6 +2,8 @@
 
 A Cloudflare Worker that automatically detects AI user agents and serves them markdown versions of your web content for better parsing and understanding.
 
+**[Quick Start](#quick-start)** | **[Installation](#installation)** | **[Configuration](#configuration)** | **[Testing](#testing)** | **[About](#about-aivory)**
+
 ## Quick Start
 
 **No build tools needed!** Download the pre-built bundle and paste it into Cloudflare Dashboard:
