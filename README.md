@@ -323,10 +323,6 @@ MIT License - See LICENSE file for details
 
 Contributions welcome! Please open an issue or submit a pull request.
 
-## Credits
-
-This project uses [Turndown](https://github.com/mixmark-io/turndown) by Dom Christie for HTML to Markdown conversion. Turndown is a highly configurable library that converts HTML to clean, semantic markdown.
-
 ## About AIVory
 
 AIVory provides real-time compliance and security validation for developers. Our tools integrate directly into IDEs and AI coding assistants to catch violations as you code.
@@ -336,3 +332,7 @@ AIVory provides real-time compliance and security validation for developers. Our
 - Contact: support@aivory.net
 
 We believe in making the web more efficient and accessible for both humans and AI agents.
+
+## Credits
+
+This project uses [Turndown](https://github.com/mixmark-io/turndown) by Dom Christie for HTML to Markdown conversion. Turndown is a highly configurable library that converts HTML to clean, semantic markdown.
