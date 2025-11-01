@@ -102,28 +102,19 @@ const CONFIG = {
 
 ### Step 3: Deploy
 
-**Option A: Deploy via Wrangler CLI (Recommended)**
+**Deploy via Wrangler CLI (Required)**
 
 ```bash
 # Login to Cloudflare
 wrangler login
 
-# Edit wrangler.toml and set your domain in routes
-# Then deploy (automatically bundles dependencies)
+# Edit wrangler.toml and set your domain in routes (uncomment and configure)
+
+# Deploy (Wrangler automatically bundles Turndown and dependencies)
 wrangler deploy
 ```
 
-**Option B: Deploy via Cloudflare Dashboard**
-
-Since the worker now uses npm dependencies, you must build it first:
-
-```bash
-# Build the worker (bundles dependencies)
-npx wrangler deploy --dry-run --outdir=dist
-
-# Copy the bundled code from dist/index.js
-# Paste into Cloudflare Dashboard → Workers & Pages → Create Worker
-```
+**Note**: Deployment via Cloudflare Dashboard is not recommended since the worker uses npm dependencies (Turndown) that require bundling. Wrangler handles this automatically.
 
 ### Step 4: Add Routes
 

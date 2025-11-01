@@ -4,6 +4,13 @@ name = "ai-markdown-worker"
 main = "worker.js"
 compatibility_date = "2024-01-01"
 
+# Build configuration
+[build]
+command = ""
+
+[build.upload]
+format = "modules"
+
 # Routes - Update with your domain
 # routes = [
 #   { pattern = "yourdomain.com/*", zone_name = "yourdomain.com" }

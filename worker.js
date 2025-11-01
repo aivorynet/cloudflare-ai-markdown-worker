@@ -2,7 +2,7 @@
  * AI Markdown Web Worker for Cloudflare
  *
  * Detects AI user agents and serves markdown versions of web content.
- * Supports both pre-generated markdown files (Hugo) and on-the-fly HTML to markdown conversion.
+ * Supports both pre-generated markdown files and on-the-fly HTML to markdown conversion.
  *
  * @license MIT
  * @author AIVory (https://aivory.net)
