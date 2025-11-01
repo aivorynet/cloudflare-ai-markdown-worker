@@ -11857,15 +11857,9 @@ var CONFIG = {
   // Options: 'index' for /md/about/index.md or 'direct' for /md/about.md
   markdownFilePattern: "index",
   // Content selectors to try (in order) when extracting main content
-  // Adjust these based on your HTML structure
+  // Set to ['body'] to convert entire page, or specify selectors for main content only
   contentSelectors: [
-    "main",
-    "article",
-    '[role="main"]',
-    ".content",
-    ".main-content",
-    "#content",
-    "#main-content"
+    "body"
   ],
   // AI user agents to detect
   aiUserAgents: [
@@ -12004,13 +11998,7 @@ function convertHtmlToMarkdown(html, pathname) {
   const markdown = turndownService.turndown(contentElement);
   return `# ${title}
 
-${markdown}
-
----
-
-Original URL: ${pathname}
-
-*This content was automatically converted from HTML to Markdown for AI consumption.*`;
+${markdown}`;
 }
 /**
  * AI Markdown Web Worker for Cloudflare

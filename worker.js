@@ -25,15 +25,9 @@ const CONFIG = {
   markdownFilePattern: 'index',
 
   // Content selectors to try (in order) when extracting main content
-  // Adjust these based on your HTML structure
+  // Set to ['body'] to convert entire page, or specify selectors for main content only
   contentSelectors: [
-    'main',
-    'article',
-    '[role="main"]',
-    '.content',
-    '.main-content',
-    '#content',
-    '#main-content'
+    'body'
   ],
 
   // AI user agents to detect
@@ -209,6 +203,6 @@ function convertHtmlToMarkdown(html, pathname) {
   // Convert to markdown using the DOM element
   const markdown = turndownService.turndown(contentElement);
 
-  // Build final markdown with metadata
-  return `# ${title}\n\n${markdown}\n\n---\n\nOriginal URL: ${pathname}\n\n*This content was automatically converted from HTML to Markdown for AI consumption.*`
+  // Return title and markdown content
+  return `# ${title}\n\n${markdown}`
 }
