@@ -1,0 +1,24 @@
+{
+  "name": "ai-markdown-worker",
+  "version": "1.0.0",
+  "description": "Cloudflare Worker that serves markdown to AI agents",
+  "main": "worker.js",
+  "scripts": {
+    "deploy": "wrangler deploy"
+  },
+  "keywords": [
+    "cloudflare",
+    "worker",
+    "markdown",
+    "ai",
+    "html-to-markdown"
+  ],
+  "author": "AIVory (https://aivory.net)",
+  "license": "MIT",
+  "dependencies": {
+    "turndown": "^7.2.0"
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  }
+}

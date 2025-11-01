@@ -1,0 +1,12 @@
+# Cloudflare Worker Configuration
+
+name = "ai-markdown-worker"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+# Routes - Update with your domain
+# routes = [
+#   { pattern = "yourdomain.com/*", zone_name = "yourdomain.com" }
+# ]
+
+# Uncomment and configure for your domain before deploying
