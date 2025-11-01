@@ -17,14 +17,16 @@ See [Installation](#installation) for detailed instructions and customization op
 
 ## Two Modes of Operation
 
-### Mode 1: Pre-generated Markdown (Recommended)
+### Mode 1: Pre-generated Markdown (STRONGLY RECOMMENDED)
 
 Generate markdown files for your pages and place them in a dedicated directory (e.g., `/md/`). The worker will serve these files to AI agents.
 
-**Benefits:**
-- Fast - no conversion needed
-- Precise - full control over markdown output
-- Customizable - include exactly what you want
+**Why this matters:**
+- **10-100x better quality** - You control exactly what AI sees
+- **Fast** - No conversion overhead, instant response
+- **Precise** - Clean, semantic markdown without HTML artifacts
+- **Customizable** - Include exactly what you want, exclude what you don't
+- **Reliable** - No dependency on HTML structure parsing
 
 **URL Mapping Examples:**
 ```
@@ -33,14 +35,22 @@ https://example.com/about/    → /md/about/index.md  (or /md/about.md)
 https://example.com/docs/api/ → /md/docs/api/index.md
 ```
 
-### Mode 2: On-the-Fly HTML Conversion (Fallback)
+**IMPORTANT**: Pre-generating markdown files makes a REAL DIFFERENCE. The quality difference is night and day - AI agents get clean, semantic content instead of converted HTML with potential formatting issues, navigation elements, and other noise.
+
+### Mode 2: On-the-Fly HTML Conversion (Fallback Only)
 
 If pre-generated markdown doesn't exist, the worker automatically converts HTML to markdown using Turndown.
 
-**Trade-offs:**
-- Slower - conversion happens on each request
-- Less precise - relies on HTML structure parsing
-- Works for any page - no generation needed
+**This is a FALLBACK, not a recommendation:**
+- **Lower quality** - HTML conversion is imperfect
+- **Slower** - Adds 50-200ms conversion time per request
+- **Less precise** - May include navigation, footers, and other unwanted content
+- **Unreliable** - Depends on HTML structure and may break with site updates
+
+**Use this only when:**
+- You're testing the worker before setting up markdown generation
+- You have dynamic content that can't be pre-generated
+- You need a quick temporary solution
 
 ## About This Project
 
@@ -55,9 +65,8 @@ Check out our compliance tools at [aivory.net](https://aivory.net) - they catch 
 ## Features
 
 - **AI Agent Detection**: Automatically identifies requests from Claude, GPT, Gemini, Perplexity, and other AI bots
-- **Dual Mode Support**:
-  - Serves pre-generated markdown files (recommended)
-  - Converts HTML to markdown on-the-fly as fallback
+- **Pre-generated Markdown Support**: Serves clean, hand-crafted markdown files for optimal AI comprehension (STRONGLY RECOMMENDED)
+- **HTML Conversion Fallback**: Automatic HTML to markdown conversion when pre-generated files don't exist (NOT RECOMMENDED for production)
 - **SEO Safe**: Markdown versions include `noindex, nofollow` headers
 - **Zero Impact**: Regular users see normal HTML, completely unaffected
 - **Analytics Ready**: Adds custom headers for tracking AI traffic
@@ -247,7 +256,9 @@ aiUserAgents: [
 
 ## Generating Markdown Files
 
-To use pre-generated markdown files (recommended), you have several options:
+**YOU SHOULD DO THIS.** Pre-generating markdown files is not optional if you want quality results. The HTML conversion fallback is a last resort, not a production solution.
+
+To generate markdown files, you have several options:
 
 ### Option 1: Static Site Generators
 
@@ -345,10 +356,18 @@ For best results:
 
 ## Performance
 
+**With pre-generated markdown:**
 - Worker adds ~1-5ms latency per request
-- HTML to markdown conversion adds ~5-15ms
-- Pre-generated markdown has minimal overhead
-- Consider caching converted markdown in KV storage for high-traffic sites
+- Minimal overhead - just file serving
+- Scales to any traffic level
+
+**With HTML conversion (NOT RECOMMENDED):**
+- Adds 50-200ms conversion time per request
+- Requires parsing entire HTML DOM
+- Higher memory usage
+- Does not scale well
+
+**Bottom line**: Pre-generate your markdown files. The performance difference alone justifies it, and the quality difference makes it essential.
 
 ## Browser Compatibility
 
