@@ -1,3 +1,17 @@
+/**
+ * AI Markdown Web Worker for Cloudflare
+ * https://github.com/aivorynet/cloudflare-ai-markdown-worker
+ *
+ * CONFIGURATION: Search for "const CONFIG" below to customize settings:
+ * - markdownPathPrefix: Where markdown files are stored (default: '/md')
+ * - markdownFilePattern: File naming pattern ('index' or 'direct')
+ * - contentSelectors: Which HTML elements to convert (default: ['body'])
+ * - aiUserAgents: Which AI bots to detect
+ *
+ * Built by AIVory (https://aivory.net) - Real-time code compliance validation
+ * @license MIT
+ */
+
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -12005,6 +12019,15 @@ ${markdown}`;
  *
  * Detects AI user agents and serves markdown versions of web content.
  * Supports both pre-generated markdown files and on-the-fly HTML to markdown conversion.
+ *
+ * ============================================================================
+ * CONFIGURATION INSTRUCTIONS:
+ * Search for "const CONFIG" in this file to customize settings:
+ * - markdownPathPrefix: Where your markdown files are stored (default: '/md')
+ * - markdownFilePattern: File naming pattern ('index' or 'direct')
+ * - contentSelectors: Which HTML elements to convert (default: ['body'])
+ * - aiUserAgents: Which AI bots to detect
+ * ============================================================================
  *
  * @license MIT
  * @author AIVory (https://aivory.net)

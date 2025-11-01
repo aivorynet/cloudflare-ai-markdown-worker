@@ -4,7 +4,7 @@
   "description": "Cloudflare Worker that serves markdown to AI agents",
   "main": "worker.js",
   "scripts": {
-    "build": "esbuild worker.js --bundle --format=esm --outfile=dist/worker.bundle.js",
+    "build": "node build.js",
     "deploy": "wrangler deploy"
   },
   "keywords": [
