@@ -9,6 +9,7 @@
  */
 
 import TurndownService from 'turndown';
+import { parseHTML } from 'linkedom';
 
 // ============================================================================
 // CONFIGURATION - Customize these settings for your site
@@ -156,59 +157,43 @@ function convertToMarkdownPath(pathname) {
 }
 
 /**
- * Convert HTML to Markdown using Turndown
+ * Convert HTML to Markdown using Turndown with linkedom for DOM parsing
  * Extracts main content and converts to clean markdown
  */
 function convertHtmlToMarkdown(html, pathname) {
+  // Parse HTML using linkedom to create a DOM
+  const { document } = parseHTML(html);
+
   // Extract title
-  const titleMatch = html.match(/<title[^>]*>([^<]+)<\/title>/i)
-  const title = titleMatch ? titleMatch[1].trim() : 'Page Content'
+  const titleElement = document.querySelector('title');
+  const title = titleElement ? titleElement.textContent.trim() : 'Page Content';
 
   // Try to extract main content using configured selectors
-  let contentHtml = html
+  let contentElement = null;
 
   for (const selector of CONFIG.contentSelectors) {
-    let regex;
-
-    // Handle different selector types
-    if (selector.startsWith('#')) {
-      // ID selector: #content
-      const id = selector.slice(1);
-      regex = new RegExp(`<[^>]+id=["']${id}["'][^>]*>([\\s\\S]*?)<\\/[^>]+>`, 'i');
-    } else if (selector.startsWith('.')) {
-      // Class selector: .content
-      const className = selector.slice(1);
-      regex = new RegExp(`<[^>]+class=["'][^"']*${className}[^"']*["'][^>]*>([\\s\\S]*?)<\\/[^>]+>`, 'i');
-    } else if (selector.includes('[')) {
-      // Attribute selector: [role="main"]
-      const attrMatch = selector.match(/\[([^=]+)=["']([^"']+)["']\]/);
-      if (attrMatch) {
-        const attr = attrMatch[1];
-        const value = attrMatch[2];
-        regex = new RegExp(`<[^>]+${attr}=["']${value}["'][^>]*>([\\s\\S]*?)<\\/[^>]+>`, 'i');
-      }
-    } else {
-      // Element selector: main, article
-      regex = new RegExp(`<${selector}[^>]*>([\\s\\S]*?)<\\/${selector}>`, 'i');
-    }
-
-    if (regex) {
-      const match = html.match(regex);
-      if (match) {
-        contentHtml = match[1];
+    try {
+      contentElement = document.querySelector(selector);
+      if (contentElement) {
         break;
       }
+    } catch (e) {
+      // Invalid selector, continue to next
+      continue;
     }
   }
 
-  // Remove scripts, styles, and other unwanted elements
-  contentHtml = contentHtml
-    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
-    .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, '')
-    .replace(/<nav\b[^<]*(?:(?!<\/nav>)<[^<]*)*<\/nav>/gi, '')
-    .replace(/<header\b[^<]*(?:(?!<\/header>)<[^<]*)*<\/header>/gi, '')
-    .replace(/<footer\b[^<]*(?:(?!<\/footer>)<[^<]*)*<\/footer>/gi, '')
-    .replace(/<aside\b[^<]*(?:(?!<\/aside>)<[^<]*)*<\/aside>/gi, '');
+  // If no content element found, use body
+  if (!contentElement) {
+    contentElement = document.body || document.documentElement;
+  }
+
+  // Remove unwanted elements
+  const unwantedSelectors = ['script', 'style', 'nav', 'header', 'footer', 'aside'];
+  for (const selector of unwantedSelectors) {
+    const elements = contentElement.querySelectorAll(selector);
+    elements.forEach(el => el.remove());
+  }
 
   // Initialize Turndown service with options
   const turndownService = new TurndownService({
@@ -221,8 +206,8 @@ function convertHtmlToMarkdown(html, pathname) {
     preformattedCode: true       // Preserve code formatting
   });
 
-  // Convert to markdown
-  const markdown = turndownService.turndown(contentHtml);
+  // Convert to markdown using the DOM element
+  const markdown = turndownService.turndown(contentElement);
 
   // Build final markdown with metadata
   return `# ${title}\n\n${markdown}\n\n---\n\nOriginal URL: ${pathname}\n\n*This content was automatically converted from HTML to Markdown for AI consumption.*`
