@@ -1,5 +1,9 @@
 # AI Markdown Web Worker
 
+<p align="center">
+  <img src="aivory_cloudflare_worker.png" alt="AI Markdown Web Worker" style="max-width: 400px;" width="400">
+</p>
+
 A Cloudflare Worker that automatically detects AI user agents and serves them markdown versions of your web content for better parsing and understanding.
 
 **[Quick Start](#quick-start)** | **[Installation](#installation)** | **[Configuration](#configuration)** | **[Testing](#testing)** | **[About](#about-aivory)**
